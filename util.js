@@ -45,6 +45,36 @@ const onlyDamage = (value, index, self) => {
 	return value.indexOf("0 - 0%") === -1;
 }
 
+const handleCalcs = (output, key, list) => {
+	output += '<th scope="row">';
+	output += key;
+	output += '</th>';
+	for (var k in list) {
+		list[k] = list[k].filter(onlyUnique);
+		list[k] = list[k].filter(onlyDamage);
+		output += '<td>';
+
+		output += '<ul class="list-group">';
+
+		for (var listKey in list[k]) {
+			var listVal = list[k][listKey];
+			var move = listVal.substr(0, listVal.lastIndexOf(':'));
+			var percentage = listVal.substr(listVal.lastIndexOf(':') + 2);
+			percentage = percentage.replace('(', '').replace(')', '');
+			output += '<li class="list-group-item"><span class="badge">';
+			output += percentage;
+			output += '</span>';
+			output += move;
+			output += '</li>';
+		}
+
+		output += '</ul>';
+
+		output += '</td>';
+	}
+	return output;
+};
+
 // Exported functions
 
 const translateEvs = (pokeInfo) => {
@@ -119,33 +149,21 @@ const describeCalcs = (pokeOwn, gen, pokeOpp, generation, calcs, key, key2) => {
 	}
 };
 
-const handleCalcs = (output, key, list) => {
-	output += '<th scope="row">';
-	output += key;
-	output += '</th>';
-	for (var k in list) {
-		list[k] = list[k].filter(onlyUnique);
-		list[k] = list[k].filter(onlyDamage);
-		output += '<td>';
-
-		output += '<ul class="list-group">';
-
-		for (var listKey in list[k]) {
-			var listVal = list[k][listKey];
-			var move = listVal.substr(0, listVal.lastIndexOf(':'));
-			var percentage = listVal.substr(listVal.lastIndexOf(':') + 2);
-			percentage = percentage.replace('(', '').replace(')', '');
-			output += '<li class="list-group-item"><span class="badge">';
-			output += percentage;
-			output += '</span>';
-			output += move;
-			output += '</li>';
-		}
-
-		output += '</ul>';
-
-		output += '</td>';
+const handleOutput = (ownPokemon, oppPokemon, owncalcs, oppcalcs) => {
+	let output = '';
+	output += '<table class="table table-condensed">';
+	output += '<thead><th scope="col">' + ownPokemon + '</th>';
+	for (var key in oppcalcs) {
+		output += '<th scope="col">' + oppPokemon + ' - ' + key + '</th>';
 	}
+	output += '</thead>';
+	output += '<tbody>';
+	for (var key in owncalcs) {
+		output += '<tr>';
+		output = handleCalcs(output, key, owncalcs[key]);
+		output += '</tr>';
+	}
+	output += '</tbody></table>';
 	return output;
 };
 
@@ -156,5 +174,5 @@ export {
 	getSetPokemon,
 	isTierAvailable,
 	describeCalcs,
-	handleCalcs,
+	handleOutput,
 };

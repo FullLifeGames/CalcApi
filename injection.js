@@ -5,7 +5,7 @@ import {
 	getSetPokemon,
 	isTierAvailable,
 	describeCalcs,
-	handleCalcs,
+	handleOutput,
 } from "./util.js";
 
 $(function() {
@@ -82,35 +82,9 @@ $(function() {
 	}
 
 	var output = '';
-	output += '<table class="table table-condensed">';
-	output += '<thead><th scope="col">' + ownPokemon + '</th>';
-	for (var key in oppcalcs) {
-		output += '<th scope="col">' + oppPokemon + ' - ' + key + '</th>';
-	}
-	output += '</thead>';
-	output += '<tbody>';
-	for (var key in owncalcs) {					
-		output += '<tr>';
-		output = handleCalcs(output, key, owncalcs[key]);
-		output += '</tr>';
-	}
-	output += '</tbody></table>';
-	
 
-	output += '<table class="table table-condensed">';
-	output += '<thead><th scope="col">' + oppPokemon + '</th>';
-	for (var key in owncalcs) {
-			output += '<th scope="col">' + ownPokemon + ' - ' + key + '</th>';
-	}
-	output += '</thead>';
-	output += '<tbody>';
-
-	for (var key in oppcalcs) {
-		output += '<tr>';
-		output = handleCalcs(output, key, oppcalcs[key]);
-		output += '</tr>';
-	}
-	output += '</tbody></table>';
+	output += handleOutput(ownPokemon, oppPokemon, owncalcs, oppcalcs);
+	output += handleOutput(oppPokemon, ownPokemon, oppcalcs, owncalcs);
 
 	$('#results').html(output);
 });
