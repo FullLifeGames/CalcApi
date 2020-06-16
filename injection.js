@@ -30,14 +30,8 @@ $(function () {
 
 	var gen = new Generation(generation);
 
-	var hasOwnCustomSet = false;
-	if (Object.values(setsOwn).some((entry) => 'isCustomSet' in entry)) {
-		hasOwnCustomSet = true;
-	}
-	var hasOppCustomSet = false;
-	if (Object.values(setsOpp).some((entry) => 'isCustomSet' in entry)) {
-		hasOppCustomSet = true;
-	}
+	var hasOwnCustomSet = Object.values(setsOwn).some((entry) => 'isCustomSet' in entry);
+	var hasOppCustomSet = Object.values(setsOpp).some((entry) => 'isCustomSet' in entry);
 
 	var ownTierAvailable = isTierAvailable(setsOwn, mode);
 
