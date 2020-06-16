@@ -8,8 +8,8 @@ import {
 	handleOutput,
 } from "./util.js";
 
-$(function() {
-	
+$(function () {
+
 	var getParameters = getSearchParameters();
 
 	var ownPokemon = getParameters['ownPokemon'];
@@ -31,18 +31,18 @@ $(function() {
 	var gen = new Generation(generation);
 
 	var hasOwnCustomSet = false;
-	if ("Custom Set" in setsOwn) {
+	if (Object.values(setsOwn).some((entry) => 'isCustomSet' in entry)) {
 		hasOwnCustomSet = true;
 	}
 	var hasOppCustomSet = false;
-	if ("Custom Set" in setsOpp) {
+	if (Object.values(setsOpp).some((entry) => 'isCustomSet' in entry)) {
 		hasOppCustomSet = true;
 	}
 
 	var ownTierAvailable = isTierAvailable(setsOwn, mode);
 
 	for (var key in setsOwn) {
-		if (hasOwnCustomSet && "Custom Set" !== key) {
+		if (hasOwnCustomSet && !('isCustomSet' in setsOwn[key])) {
 			continue;
 		}
 		if (ownTierAvailable && key.toLowerCase().indexOf(mode + " ") === -1 && !hasOwnCustomSet) {
@@ -55,7 +55,7 @@ $(function() {
 		var oppTierAvailable = isTierAvailable(setsOpp, mode);
 
 		for (var key2 in setsOpp) {
-			if (hasOppCustomSet && "Custom Set" !== key2) {
+			if (hasOppCustomSet && !('isCustomSet' in setsOpp[key2])) {
 				continue;
 			}
 			if (oppTierAvailable && key2.toLowerCase().indexOf(mode + " ") === -1 && !hasOppCustomSet) {
@@ -74,7 +74,7 @@ $(function() {
 			translateEvs(setOpp);
 			var pokeOwn = new Pokemon(gen, ownPokemon, setOwn);
 			if ("evs" in setOwn) pokeOwn.evs = setOwn.evs;
-			var pokeOpp = new Pokemon(gen, oppPokemon, setOpp);	
+			var pokeOpp = new Pokemon(gen, oppPokemon, setOpp);
 			if ("evs" in setOpp) pokeOpp.evs = setOpp.evs;
 			describeCalcs(pokeOwn, gen, pokeOpp, generation, owncalcs, key, key2);
 			describeCalcs(pokeOpp, gen, pokeOwn, generation, oppcalcs, key2, key);
