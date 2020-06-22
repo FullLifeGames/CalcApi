@@ -8,6 +8,15 @@ import {
 	handleOutput,
 } from "./util.js";
 
+declare var SETDEX: any;
+declare class Generation {
+	constructor(generation: number);
+};
+declare class Pokemon {
+	constructor(generation: Generation, pokemon: string, setOwn: any);
+	evs: any;
+};
+
 $(function () {
 
 	var getParameters = getSearchParameters();
@@ -25,13 +34,13 @@ $(function () {
 	var setsOwn = setdex[ownPokemon];
 	oppPokemon = getSetPokemon(setdex, oppPokemon);
 	var setsOpp = setdex[oppPokemon];
-	var owncalcs = {};
-	var oppcalcs = {}
+	var owncalcs = {} as any;
+	var oppcalcs = {} as any;
 
 	var gen = new Generation(generation);
 
-	var hasOwnCustomSet = Object.values(setsOwn).some((entry) => 'isCustomSet' in entry);
-	var hasOppCustomSet = Object.values(setsOpp).some((entry) => 'isCustomSet' in entry);
+	var hasOwnCustomSet = Object.values(setsOwn).some((entry : any) => 'isCustomSet' in entry);
+	var hasOppCustomSet = Object.values(setsOpp).some((entry : any) => 'isCustomSet' in entry);
 
 	var ownTierAvailable = isTierAvailable(setsOwn, mode);
 

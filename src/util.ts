@@ -1,6 +1,6 @@
 // Pure private utility
 
-const getDifference = (a, b) => {
+const getDifference = (a: string, b: string) : string => {
 	var i = 0;
 	var j = 0;
 	var result = "";
@@ -15,7 +15,7 @@ const getDifference = (a, b) => {
 	return result;
 };
 
-const argmin = (arr) => {
+const argmin = (arr: number[]) => {
 	if (!Array.isArray(arr)) {
 		throw new TypeError('argmin()::invalid input argument. Must provide an array.');
 	}
@@ -37,15 +37,15 @@ const argmin = (arr) => {
 	return idx;
 };
 
-const onlyUnique = (value, index, self) => {
+const onlyUnique = (value: string, index: any, self: any) => {
 	return self.indexOf(value) === index;
 }
 
-const onlyDamage = (value, index, self) => {
+const onlyDamage = (value: string) => {
 	return value.indexOf("0 - 0%") === -1;
 }
 
-const handleCalcs = (output, key, list) => {
+const handleCalcs = (output: string, key: string, list: any) => {
 	output += '<th scope="row">';
 	output += key;
 	output += '</th>';
@@ -77,7 +77,7 @@ const handleCalcs = (output, key, list) => {
 
 // Exported functions
 
-const translateEvs = (pokeInfo) => {
+const translateEvs = (pokeInfo : any) => {
 	if ("at" in pokeInfo.evs) pokeInfo.evs.atk = pokeInfo.evs.at;
 	if ("df" in pokeInfo.evs) pokeInfo.evs.def = pokeInfo.evs.df;
 	if ("sa" in pokeInfo.evs) pokeInfo.evs.spa = pokeInfo.evs.sa;
@@ -85,22 +85,22 @@ const translateEvs = (pokeInfo) => {
 	if ("sp" in pokeInfo.evs) pokeInfo.evs.spe = pokeInfo.evs.spe;
 };
 
-const getSearchParameters = () => {
+const getSearchParameters = () : any => {
 	var prmstr = window.location.search.substr(1);
 	return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
-};
+} ;
 
-const transformToAssocArray = (prmstr) => {
-	var params = {};
-	var prmarr = prmstr.split("&");
+const transformToAssocArray = (prmstr: string) => {
+	let params = {} as any;
+	let prmarr = prmstr.split("&");
 	for (var i = 0; i < prmarr.length; i++) {
-		var tmparr = prmarr[i].split("=");
+		let tmparr = prmarr[i].split("=");
 		params[tmparr[0]] = tmparr[1];
 	}
 	return params;
 };
 
-const handleInput = (input) => {
+const handleInput = (input: string) => {
 	var handledInput = input;
 	handledInput = handledInput.charAt(0).toUpperCase() + handledInput.slice(1);
 	if (handledInput.indexOf('-') !== -1) {
@@ -110,7 +110,7 @@ const handleInput = (input) => {
 	return handledInput;
 };
 
-const getSetPokemon = (setdex, pokemon) => {
+const getSetPokemon = (setdex: any, pokemon: string) => {
 	if (pokemon in setdex) {
 		return pokemon;
 	}
@@ -125,7 +125,7 @@ const getSetPokemon = (setdex, pokemon) => {
 	return pokemon;
 };
 					
-const isTierAvailable = (setCompilation, mode) => {
+const isTierAvailable = (setCompilation: {}, mode: string) => {
 	for (var key in setCompilation) {
 		if (key.toLowerCase().indexOf(mode + " ") !== -1) {
 			return true;
@@ -134,7 +134,13 @@ const isTierAvailable = (setCompilation, mode) => {
 	return false;
 };
 
-const describeCalcs = (pokeOwn, gen, pokeOpp, generation, calcs, key, key2) => {
+declare var notation: any;
+declare class Move {
+	constructor(gen: any, poke: any);
+};
+declare function calculate(generation: any, pokeOwn: any, pokeOpp: any, moveOwn: any, filler: any): any;
+
+const describeCalcs = (pokeOwn: any, gen: any, pokeOpp: any, generation: any, calcs: any, key: any, key2: any) : void => {
 	for (var i = 0; i < pokeOwn.moves.length; i++) {
 		var moveOwn = new Move(gen, pokeOwn.moves[i]);
 		for (var j = 0; j < pokeOpp.moves.length; j++) {
@@ -149,7 +155,7 @@ const describeCalcs = (pokeOwn, gen, pokeOpp, generation, calcs, key, key2) => {
 	}
 };
 
-const handleOutput = (ownPokemon, oppPokemon, owncalcs, oppcalcs) => {
+const handleOutput = (ownPokemon: string, oppPokemon: string, owncalcs: any, oppcalcs: any) : string => {
 	let output = '';
 	output += '<table class="table table-condensed">';
 	output += '<thead><th scope="col">' + ownPokemon + '</th>';
