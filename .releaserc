@@ -9,7 +9,7 @@
     ["@semantic-release/github", {
       "preset": "eslint",
       "assets": [
-        {"path": "dist/api/**", "label": "CalcApi"},
+        {"path": "dist/api/**"},
       ]
     }],
     ["@semantic-release/git", {

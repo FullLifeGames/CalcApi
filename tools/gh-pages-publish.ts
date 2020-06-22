@@ -21,7 +21,6 @@ let ghToken = process.env.GH_TOKEN
 
 echo("Deploying docs!!!")
 cd("docs")
-exec("cp -r ../images ./")
 touch(".nojekyll")
 exec("git init")
 exec("git add .")
