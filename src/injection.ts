@@ -16,6 +16,9 @@ declare class Pokemon {
   constructor(generation: Generation, pokemon: string, setOwn: any);
   evs: any;
 }
+declare type Terrain = 'Electric' | 'Grassy' | 'Psychic' | 'Misty';
+declare type Weather =
+  | 'Sand' | 'Sun' | 'Rain' | 'Hail' | 'Harsh Sunshine' | 'Heavy Rain' | 'Strong Winds';
 
 $(function () {
   const getParameters = getSearchParameters();
@@ -27,6 +30,20 @@ $(function () {
 
   const generation = parseInt(getParameters['tier'][3]);
   const mode = getParameters['tier'].slice(4);
+
+  let weather = getParameters['weather'];
+  try {
+    weather = weather as Weather;
+  } catch (error) {
+    weather = undefined;
+  }
+  let terrain = getParameters['terrain'];
+  try {
+    terrain = terrain as Terrain;
+  } catch (error) { 
+    terrain = undefined;
+  }
+
   const setdex = SETDEX[generation];
 
   ownPokemon = getSetPokemon(setdex, ownPokemon);
@@ -90,8 +107,8 @@ $(function () {
       if ('evs' in setOwn) pokeOwn.evs = setOwn.evs;
       const pokeOpp = new Pokemon(gen, oppPokemon, setOpp);
       if ('evs' in setOpp) pokeOpp.evs = setOpp.evs;
-      describeCalcs(pokeOwn, gen, pokeOpp, generation, owncalcs, key, key2);
-      describeCalcs(pokeOpp, gen, pokeOwn, generation, oppcalcs, key2, key);
+      describeCalcs(pokeOwn, gen, pokeOpp, generation, weather, terrain, owncalcs, key, key2);
+      describeCalcs(pokeOpp, gen, pokeOwn, generation, weather, terrain, oppcalcs, key2, key);
     }
   }
 
