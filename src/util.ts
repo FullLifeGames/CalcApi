@@ -162,7 +162,7 @@ const describeCalcs = (
   gen: any,
   pokeOpp: any,
   generation: any,
-  weather: any, 
+  weather: any,
   terrain: any,
   calcs: any,
   key: any,
@@ -171,7 +171,13 @@ const describeCalcs = (
   for (let i = 0; i < pokeOwn.moves.length; i++) {
     const moveOwn = new Move(gen, pokeOwn.moves[i]);
     for (let j = 0; j < pokeOpp.moves.length; j++) {
-      const calc = calculate(generation, pokeOwn, pokeOpp, moveOwn, new Field({ weather, terrain }));
+      const calc = calculate(
+        generation,
+        pokeOwn,
+        pokeOpp,
+        moveOwn,
+        new Field({ weather, terrain })
+      );
       const desc = calc.fullDesc(notation, null);
       let def = calc.rawDesc.moveName;
       let range = desc.substr(desc.lastIndexOf('('));

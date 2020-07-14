@@ -18,7 +18,13 @@ declare class Pokemon {
 }
 declare type Terrain = 'Electric' | 'Grassy' | 'Psychic' | 'Misty';
 declare type Weather =
-  | 'Sand' | 'Sun' | 'Rain' | 'Hail' | 'Harsh Sunshine' | 'Heavy Rain' | 'Strong Winds';
+  | 'Sand'
+  | 'Sun'
+  | 'Rain'
+  | 'Hail'
+  | 'Harsh Sunshine'
+  | 'Heavy Rain'
+  | 'Strong Winds';
 
 $(function () {
   const getParameters = getSearchParameters();
@@ -40,7 +46,7 @@ $(function () {
   let terrain = getParameters['terrain'];
   try {
     terrain = terrain as Terrain;
-  } catch (error) { 
+  } catch (error) {
     terrain = undefined;
   }
 
@@ -107,8 +113,28 @@ $(function () {
       if ('evs' in setOwn) pokeOwn.evs = setOwn.evs;
       const pokeOpp = new Pokemon(gen, oppPokemon, setOpp);
       if ('evs' in setOpp) pokeOpp.evs = setOpp.evs;
-      describeCalcs(pokeOwn, gen, pokeOpp, generation, weather, terrain, owncalcs, key, key2);
-      describeCalcs(pokeOpp, gen, pokeOwn, generation, weather, terrain, oppcalcs, key2, key);
+      describeCalcs(
+        pokeOwn,
+        gen,
+        pokeOpp,
+        generation,
+        weather,
+        terrain,
+        owncalcs,
+        key,
+        key2
+      );
+      describeCalcs(
+        pokeOpp,
+        gen,
+        pokeOwn,
+        generation,
+        weather,
+        terrain,
+        oppcalcs,
+        key2,
+        key
+      );
     }
   }
 
